@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+    <!-- Документация: -->
+    <!-- Создание представлений:
+    https://learn.microsoft.com/ru-ru/visualstudio/debugger/create-custom-views-of-native-objects?view=vs-2022 -->
+    <!-- Описатели форматов:
+    https://learn.microsoft.com/ru-ru/visualstudio/debugger/format-specifiers-in-cpp?view=vs-2022 -->
+    <!-- Туториал:
+    https://www.cppstories.com/2021/natvis-tutorial -->
+    <Type Name="std::__1::string">
+        <DisplayString Condition="this->empty()">empty</DisplayString>
+        <DisplayString Condition="!this->empty()">{this->data()}</DisplayString>
+
+        <Expand>
+            <ArrayItems>
+                <Size>this->size()</Size>
+                <ValuePointer>this->data()</ValuePointer>
+            </ArrayItems>
+        </Expand>
+    </Type>
+
+    <Type Name="std::__1::array&lt;*&gt;">
+        <DisplayString>std::array[{sizeof(__elems_) / sizeof(__elems_[0])}]</DisplayString>
+
+        <Expand>
+            <ArrayItems>
+                <Size>sizeof(__elems_) / sizeof(__elems_[0])</Size>
+                <ValuePointer>__elems_</ValuePointer>
+            </ArrayItems>
+        </Expand>
+    </Type>
+
+    <Type Name="std::__1::unique_ptr&lt;*&gt;">
+        <DisplayString>std::unique_ptr</DisplayString>
+        <Expand>
+            <ExpandedItem>*__ptr_->__value_</ExpandedItem>
+        </Expand>
+    </Type>
+</AutoVisualizer>
